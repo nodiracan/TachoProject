@@ -1,4 +1,4 @@
-package com.example.tachoproject.comtrollers;
+package com.example.tachoproject.controllers;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
