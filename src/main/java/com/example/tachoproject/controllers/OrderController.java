@@ -1,8 +1,12 @@
 package com.example.tachoproject.controllers;
 
 import com.example.tachoproject.domains.TacoOrder;
+import com.example.tachoproject.repository.OrderRepository;
+import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.jdbc.core.PreparedStatementCreatorFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,6 +19,12 @@ import org.springframework.web.bind.support.SessionStatus;
 @SessionAttributes("tacoOrder")
 public class OrderController {
 
+    private OrderRepository orderRepository;
+
+    public OrderController(OrderRepository orderRepository) {
+        this.orderRepository = orderRepository;
+    }
+
     @GetMapping("/current")
     public String orderForm(){
         return "orderForm";
@@ -22,7 +32,12 @@ public class OrderController {
 
 
     @PostMapping
-    public String  processOrder(TacoOrder order, SessionStatus sessionStatus){
+    public String  processOrder(@Valid TacoOrder order, Errors errors, SessionStatus sessionStatus){
+
+        if (errors.hasErrors()) {
+            return "orderForm";
+        }
+        orderRepository.save(order);
         log.info("Order Submitted: {},", order);
         sessionStatus.setComplete();
         return "redirect:/";
