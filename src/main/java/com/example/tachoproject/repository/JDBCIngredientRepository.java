@@ -12,7 +12,9 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public class JDBCIngredientRepository implements IngredientRepository{
+public class JDBCIngredientRepository{
+
+        //implements IngredientRepository{
 
     private JdbcTemplate jdbcTemplate;
 
@@ -22,7 +24,6 @@ public class JDBCIngredientRepository implements IngredientRepository{
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    @Override
     public Iterable<Ingredient> findAll() {
         return jdbcTemplate.query(
                 "select id, name, type from Ingredient", this::mapRowToIngredient
@@ -47,7 +48,6 @@ public class JDBCIngredientRepository implements IngredientRepository{
         );
     }
 
-    @Override
     public Optional<Ingredient> findById(String id) {
         List<Ingredient> list = jdbcTemplate.query(
                 "select id, name, type from Ingredient where id = ?", this::mapRowToIngredient, id
@@ -60,7 +60,6 @@ public class JDBCIngredientRepository implements IngredientRepository{
 
 
 
-    @Override
     public Ingredient save(Ingredient ingredient) {
         jdbcTemplate.update("insert into Ingredient (id, name, type) values (?, ?, ?)",
         ingredient.getId(),

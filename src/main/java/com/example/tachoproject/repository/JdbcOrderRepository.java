@@ -16,7 +16,8 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
-public class JdbcOrderRepository implements OrderRepository {
+public class JdbcOrderRepository{
+        //implements OrderRepository {
 
     private JdbcOperations jdbcOperations;
 
@@ -24,7 +25,6 @@ public class JdbcOrderRepository implements OrderRepository {
         this.jdbcOperations = jdbcOperations;
     }
 
-    @Override
     @Transactional
     public TacoOrder save(TacoOrder tacoOrder) {
         PreparedStatementCreatorFactory pscf = new PreparedStatementCreatorFactory(

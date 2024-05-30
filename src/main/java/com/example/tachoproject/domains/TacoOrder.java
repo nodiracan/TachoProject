@@ -1,22 +1,30 @@
 package com.example.tachoproject.domains;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Table;
 import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import lombok.Data;
 import org.hibernate.validator.constraints.CreditCardNumber;
+import org.springframework.data.annotation.Id;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 @Data
-public class TacoOrder {
+@Table(name = "taco_order")
+public class TacoOrder implements Serializable {
 
     private static final long serialVersionUID = 1L;
+
+    @Id
     private Long id;
     private Date placedAt = new Date();
 
+    //@Column(name = "delivery_name")
     @NotBlank(message = "Delivery name is required")
     private String deliveryName;
 
